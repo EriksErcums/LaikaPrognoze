@@ -26,5 +26,8 @@ public class LaikaPrognozeGUI extends JFrame{
         JLabel mitrumaLabel = new JLabel("Mitrums: ");
         mitrumaLabel.setBounds(10, 70, 150, 25);
         add(mitrumaLabel);
+
+        LaikaPrognoze laikaPrognoze = new LaikaPrognoze();
+        laikaPrognoze.pieprasitDatus();
     }
 }
