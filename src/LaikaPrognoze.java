@@ -1,20 +1,14 @@
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.Properties;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class LaikaPrognoze {
     public void pieprasitDatus(){
-        Properties properties = new Properties();
         try{
-            properties.load(new FileInputStream("src\\config.properties"));
-            String apiKey = properties.getProperty("api.key");
             String pilseta = "Riga";
             // String url = "http://api.openweathermap.org/data/2.5/weather?q=" + pilseta + "&appid=" + apiKey;
 
