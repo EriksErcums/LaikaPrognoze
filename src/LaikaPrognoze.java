@@ -10,16 +10,20 @@ import org.json.JSONObject;
 
 public class LaikaPrognoze {
 
-    public String pilseta;
-    public String lat;
-    public String lon;
-    public String temp;
-    public String mitrums;
-    public String vejaAtrums;
+    public String pilseta = "";
+    public String lat = "0";
+    public String lon = "0";
+    public String temp = "0";
+    public String mitrums = "0";
+    public String vejaAtrums = "0";
 
     //Bez  lietotaja pisletas pieprasijuma, default Liepaja
     public void iegutDatus(){
-        iegutPilsetasKoordinatas("Liepaja");
+        if(this.pilseta.isEmpty())
+            iegutPilsetasKoordinatas("Liepaja");
+        else
+            iegutPilsetasKoordinatas(this.pilseta);
+
         pieprasitDatus();
     }
 
@@ -47,9 +51,15 @@ public class LaikaPrognoze {
     //No API pieprasijuma izvel laikapstaklus
     private void iegutLaikapstaklus(String atbilde){
         try{
-            JSONObject obj = new JSONObject(atbilde);
-        
-            System.out.println(obj.toString());
+            JSONObject jsonAtbilde = new JSONObject(atbilde);
+            jsonAtbilde = jsonAtbilde.getJSONObject("current");
+
+            this.temp = Double.toString(jsonAtbilde.getDouble("temperature_2m"));
+            this.mitrums = Double.toString(jsonAtbilde.getDouble("relative_humidity_2m"));
+            this.vejaAtrums = Double.toString(jsonAtbilde.getDouble("wind_speed_10m"));
+
+            //Debug
+            System.out.println("Temp: " + this.temp + " Mitrums: " + this.mitrums + " Veja atrums: " + this.vejaAtrums);
         
         }
         catch(JSONException e){
@@ -87,8 +97,8 @@ public class LaikaPrognoze {
 
             jsonAtbilde = resultsArray.getJSONObject(0);
 
-            this.lat = jsonAtbilde.getString("latitude");
-            this.lon = jsonAtbilde.getString("longitude");
+            this.lat = Double.toString(jsonAtbilde.getDouble("latitude"));
+            this.lon = Double.toString(jsonAtbilde.getDouble("longitude"));
 
             //Debug
             System.out.println(": Latitude = " + this.lat + ", Longitude = " + this.lon);
