@@ -29,5 +29,6 @@ public class LaikaPrognozeGUI extends JFrame{
 
         LaikaPrognoze laikaPrognoze = new LaikaPrognoze();
         laikaPrognoze.pieprasitDatus();
+        laikaPrognoze.vieta("Riga");
     }
 }
