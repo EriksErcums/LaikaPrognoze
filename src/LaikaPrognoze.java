@@ -27,6 +27,12 @@ public class LaikaPrognoze {
         pieprasitDatus();
     }
 
+    public void iegutDatus(String pilseta){
+        iegutPilsetasKoordinatas(pilseta);
+
+        pieprasitDatus();
+    }
+
     //Pieprasa laikapstaklus no API
     private void pieprasitDatus(){
         try{
