@@ -31,22 +31,12 @@ public class LaikaPrognoze {
 
     public void dataPilseta(String atbilde){
         try{
-            JSONObject obj = new JSONObject(atbilde);
-        
-        //Debug 
-        System.out.println(obj.toString(2));
+            JSONArray jsonArray = new JSONArray(atbilde);
+            JSONObject obj = jsonArray.getJSONObject(0);
+            System.out.println(obj.toString(2));
 
-        // Get the first object in the array
-        JSONArray jsonArray = new JSONArray(atbilde);
-        obj = jsonArray.getJSONObject(0);
-
-        // Extract the latitude
-        double latitude = obj.getDouble("latitude");
-        System.out.println(latitude);
-        // double temperature = obj.getJSONObject("main").getDouble("temp");
-
-        // System.out.println("Weather: " + weatherDescription);
-        // System.out.printf("Temperature: %.2f °C%n", temperature);
+            double latitude = obj.getDouble("latitude");
+            System.out.println(latitude);
         }
         catch(JSONException e){
             System.out.println(e.getMessage());
