@@ -3,8 +3,10 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 
 public class LaikaPrognoze {
     public void pieprasitDatus(){
@@ -33,10 +35,14 @@ public class LaikaPrognoze {
         
         //Debug 
         System.out.println(obj.toString(2));
-        String lat = obj.getJSONArray("results").getString(4);
-        String lon = obj.getJSONArray("results").getJSONObject(14).getString("longitude");
-        System.out.println(lat + " " + lon);
 
+        // Get the first object in the array
+        JSONArray jsonArray = new JSONArray(atbilde);
+        obj = jsonArray.getJSONObject(0);
+
+        // Extract the latitude
+        double latitude = obj.getDouble("latitude");
+        System.out.println(latitude);
         // double temperature = obj.getJSONObject("main").getDouble("temp");
 
         // System.out.println("Weather: " + weatherDescription);
