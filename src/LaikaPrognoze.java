@@ -9,9 +9,24 @@ import org.json.JSONObject;
 
 
 public class LaikaPrognoze {
-    public void pieprasitDatus(){
+
+    public String pilseta;
+    public String lat;
+    public String lon;
+    public String temp;
+    public String mitrums;
+    public String vejaAtrums;
+
+    //Bez  lietotaja pisletas pieprasijuma, default Liepaja
+    public void iegutDatus(){
+        iegutPilsetasKoordinatas("Liepaja");
+        pieprasitDatus();
+    }
+
+    //Pieprasa laikapstaklus no API
+    private void pieprasitDatus(){
         try{
-            String url = "https://api.open-meteo.com/v1/forecast?latitude=56.946&longitude=24.1059&hourly=temperature_2m&forecast_days=1";
+            String url = "https://api.open-meteo.com/v1/forecast?latitude=" + this.lat + "&longitude=" + this.lon + "&current=temperature_2m,relative_humidity_2m,wind_speed_10m";
 
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
@@ -20,7 +35,7 @@ public class LaikaPrognoze {
 
             client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
             .thenApply(HttpResponse::body)
-            .thenAccept(response -> dataLaikaProg(response))
+            .thenAccept(response -> iegutLaikapstaklus(response))
             .join();
             
         }
@@ -29,42 +44,22 @@ public class LaikaPrognoze {
         }
     }
 
-    public void dataPilseta(String atbilde){
-        try{
-            JSONArray jsonArray = new JSONArray(atbilde);
-            JSONObject obj = jsonArray.getJSONObject(0);
-            System.out.println(obj.toString(2));
-
-            double latitude = obj.getDouble("latitude");
-            System.out.println(latitude);
-        }
-        catch(JSONException e){
-            System.out.println(e.getMessage());
-        }
-    }
-
-    public void dataLaikaProg(String atbilde){
+    //No API pieprasijuma izvel laikapstaklus
+    private void iegutLaikapstaklus(String atbilde){
         try{
             JSONObject obj = new JSONObject(atbilde);
         
-        //Debug 
-        System.out.println(obj.toString(2));
+            System.out.println(obj.toString());
         
-
-
-        // String weatherDescription = obj.getJSONArray("weather").getJSONObject(0).getString("description");
-
-        // double temperature = obj.getJSONObject("main").getDouble("temp");
-
-        // System.out.println("Weather: " + weatherDescription);
-        // System.out.printf("Temperature: %.2f °C%n", temperature);
         }
         catch(JSONException e){
             System.out.println(e.getMessage());
         }
     }
 
-    public void vieta(String pilseta){
+    //Atrod lietotaja dotas pilsetas koordinatas no API
+    private void iegutPilsetasKoordinatas(String pilseta){
+        this.pilseta = pilseta;
         try{
             String url = "https://geocoding-api.open-meteo.com/v1/search?name=" + pilseta + "&count=1&language=en&format=json";
 
@@ -75,11 +70,31 @@ public class LaikaPrognoze {
 
             client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
             .thenApply(HttpResponse::body)
-            .thenAccept(response -> dataPilseta(response))
+            .thenAccept(response -> pilsetasKoordinatas(response))
             .join();
             
         }
         catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    //No API pieprasijuma izvelk lat un lon
+    private void pilsetasKoordinatas(String atbilde){
+        try{
+            JSONObject jsonAtbilde = new JSONObject(atbilde);
+            JSONArray resultsArray = jsonAtbilde.getJSONArray("results");
+
+            jsonAtbilde = resultsArray.getJSONObject(0);
+
+            this.lat = jsonAtbilde.getString("latitude");
+            this.lon = jsonAtbilde.getString("longitude");
+
+            //Debug
+            System.out.println(": Latitude = " + this.lat + ", Longitude = " + this.lon);
+            
+        }
+        catch(JSONException e){
             System.out.println(e.getMessage());
         }
     }
