@@ -16,6 +16,9 @@ public class LaikaPrognoze {
     public String temp = "0";
     public String mitrums = "0";
     public String vejaAtrums = "0";
+    public Boolean lietus = false;
+    public Boolean sniegs = false;
+    public Boolean makonains = false;
 
     //Bez  lietotaja pisletas pieprasijuma, default Liepaja
     public void iegutDatus(){
@@ -36,7 +39,7 @@ public class LaikaPrognoze {
     //Pieprasa laikapstaklus no API
     private void pieprasitDatus(){
         try{
-            String url = "https://api.open-meteo.com/v1/forecast?latitude=" + this.lat + "&longitude=" + this.lon + "&current=temperature_2m,relative_humidity_2m,wind_speed_10m";
+            String url = "https://api.open-meteo.com/v1/forecast?latitude=" + this.lat  + "&longitude=" + this.lon + "&current=temperature_2m,relative_humidity_2m,rain,snowfall,cloud_cover,wind_speed_10m";
 
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
@@ -59,13 +62,29 @@ public class LaikaPrognoze {
         try{
             JSONObject jsonAtbilde = new JSONObject(atbilde);
             jsonAtbilde = jsonAtbilde.getJSONObject("current");
+            System.out.println((jsonAtbilde.toString()));
 
             this.temp = Double.toString(jsonAtbilde.getDouble("temperature_2m"));
             this.mitrums = Double.toString(jsonAtbilde.getDouble("relative_humidity_2m"));
             this.vejaAtrums = Double.toString(jsonAtbilde.getDouble("wind_speed_10m"));
+            
+            Double rain = jsonAtbilde.getDouble("rain");
+            this.lietus = (rain == 0) ? false : true;
+
+            Double sniegs = jsonAtbilde.getDouble("snowfall");
+            this.sniegs = (sniegs == 0) ? false : true;
+
+            Double makonains = jsonAtbilde.getDouble("cloud_cover");
+            this.makonains = (makonains <= 25) ? false : true;
+            
 
             //Debug
-            System.out.println("Temp: " + this.temp + " Mitrums: " + this.mitrums + " Veja atrums: " + this.vejaAtrums);
+            System.out.println("Temp: " + this.temp
+                + " Mitrums: " + this.mitrums
+                + " Veja atrums: " + this.vejaAtrums
+                + " Lietus: " + this.lietus
+                + " Sniegs: " + this.sniegs
+                + " Makoni: " + this.makonains);
         
         }
         catch(JSONException e){

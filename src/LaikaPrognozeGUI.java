@@ -1,3 +1,4 @@
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -41,6 +42,12 @@ public class LaikaPrognozeGUI extends JFrame{
         pilsetaField.setBounds(10, 130, 200, 25);
         add(pilsetaField);
 
+        JLabel bilde = new JLabel(izveletiesBildi(laikaPrognoze));
+        bilde.setBounds(10, 160, 200, 200);
+        add(bilde);
+        if(bilde.getIcon().getIconWidth() == -1)
+            System.out.println("Neizdevas");
+
         JButton mekletButton = new JButton();
         mekletButton.setBounds(210, 130, 25, 25);
         add(mekletButton);
@@ -52,14 +59,40 @@ public class LaikaPrognozeGUI extends JFrame{
                     laikaPrognoze.iegutDatus();
                 else
                     laikaPrognoze.iegutDatus(pilsetaField.getText());
-                    
+
                 pilsetaField.setText(null);
 
                 pilsetasLabel.setText("City: " + laikaPrognoze.pilseta);
                 tempLabel.setText("Temp: " + laikaPrognoze.temp);
                 mitrumaLabel.setText("Moist: " + laikaPrognoze.mitrums);
                 vejaAtrumsLabel.setText("Wind speed: " + laikaPrognoze.vejaAtrums);
+                bilde.setIcon(izveletiesBildi(laikaPrognoze));
             }
         });
+    }
+
+    //Nomaina scale bildei
+    private ImageIcon izmeraMainitajs(String path, int x, int y){
+        ImageIcon icon = new ImageIcon(path);
+        Image image = icon.getImage();
+        image = image.getScaledInstance(x, y, Image.SCALE_SMOOTH);
+        return new ImageIcon(image);
+    }
+
+    private ImageIcon izveletiesBildi(LaikaPrognoze laikaPrognoze){
+        //Default bilde
+        ImageIcon ikons = new ImageIcon();
+        ikons = izmeraMainitajs("/assets/clear.png", 200, 200);
+
+        if(laikaPrognoze.sniegs)
+            ikons = izmeraMainitajs("/assets/snow.png", 200, 200);
+        else if(laikaPrognoze.lietus)
+            ikons = izmeraMainitajs("/assets/rain.png", 200, 200);
+        else if(laikaPrognoze.makonains)
+            ikons = izmeraMainitajs("/assets/cloudy.png", 200, 200);
+        else
+            ikons = izmeraMainitajs("/assets/clear.png", 200, 200);
+
+        return ikons;
     }
 }
