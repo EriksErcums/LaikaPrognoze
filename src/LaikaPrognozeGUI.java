@@ -82,16 +82,16 @@ public class LaikaPrognozeGUI extends JFrame{
     private ImageIcon izveletiesBildi(LaikaPrognoze laikaPrognoze){
         //Default bilde
         ImageIcon ikons = new ImageIcon();
-        ikons = izmeraMainitajs("/assets/clear.png", 200, 200);
+        ikons = izmeraMainitajs("assets/clear.png", 200, 200);
 
         if(laikaPrognoze.sniegs)
-            ikons = izmeraMainitajs("/assets/snow.png", 200, 200);
+            ikons = izmeraMainitajs("assets/snow.png", 200, 200);
         else if(laikaPrognoze.lietus)
-            ikons = izmeraMainitajs("/assets/rain.png", 200, 200);
+            ikons = izmeraMainitajs("assets/rain.png", 200, 200);
         else if(laikaPrognoze.makonains)
-            ikons = izmeraMainitajs("/assets/cloudy.png", 200, 200);
+            ikons = izmeraMainitajs("assets/cloudy.png", 200, 200);
         else
-            ikons = izmeraMainitajs("/assets/clear.png", 200, 200);
+            ikons = izmeraMainitajs("assets/clear.png", 200, 200);
 
         return ikons;
     }
