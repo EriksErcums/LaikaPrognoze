@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +23,7 @@ public class LaikaPrognozeGUI extends JFrame{
         LaikaPrognoze laikaPrognoze = new LaikaPrognoze();
         laikaPrognoze.iegutDatus();
 
+        //LABELS
         JLabel pilsetasLabel = new JLabel("City: " + laikaPrognoze.pilseta);
         pilsetasLabel.setBounds(10, 10, 150, 25);
         add(pilsetasLabel);
@@ -38,16 +40,25 @@ public class LaikaPrognozeGUI extends JFrame{
         vejaAtrumsLabel.setBounds(10, 100, 150, 25);
         add(vejaAtrumsLabel);
 
+        //KLUDAS
+        JLabel kluda = new JLabel();
+        kluda.setBounds(10, 370, 150, 25);
+        kluda.setForeground(Color.RED);
+        add(kluda);
+        
+        //TEXT FIELD
         JTextField pilsetaField = new JTextField();
         pilsetaField.setBounds(10, 130, 200, 25);
         add(pilsetaField);
 
+        //BILDE
         JLabel bilde = new JLabel(izveletiesBildi(laikaPrognoze));
         bilde.setBounds(10, 160, 200, 200);
         add(bilde);
         if(bilde.getIcon().getIconWidth() == -1)
             System.out.println("Neizdevas");
 
+        //POGA
         JButton mekletButton = new JButton();
         mekletButton.setBounds(210, 130, 25, 25);
         add(mekletButton);
@@ -67,6 +78,7 @@ public class LaikaPrognozeGUI extends JFrame{
                 mitrumaLabel.setText("Moist: " + laikaPrognoze.mitrums);
                 vejaAtrumsLabel.setText("Wind speed: " + laikaPrognoze.vejaAtrums);
                 bilde.setIcon(izveletiesBildi(laikaPrognoze));
+                kluda.setText(laikaPrognoze.kluda);
             }
         });
     }

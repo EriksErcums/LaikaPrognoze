@@ -16,12 +16,15 @@ public class LaikaPrognoze {
     public String temp = "0";
     public String mitrums = "0";
     public String vejaAtrums = "0";
+    public String kluda = "";
     public Boolean lietus = false;
     public Boolean sniegs = false;
     public Boolean makonains = false;
 
     //Bez  lietotaja pisletas pieprasijuma, default Liepaja
     public void iegutDatus(){
+        this.kluda = ""; //Nodzest kludu
+
         if(this.pilseta.isEmpty())
             iegutPilsetasKoordinatas("Liepaja");
         else
@@ -31,6 +34,8 @@ public class LaikaPrognoze {
     }
 
     public void iegutDatus(String pilseta){
+        this.kluda = ""; //Nodzest kludu
+
         iegutPilsetasKoordinatas(pilseta);
 
         pieprasitDatus();
@@ -53,7 +58,8 @@ public class LaikaPrognoze {
             
         }
         catch(Exception e){
-            System.out.println(e.getMessage());
+            System.out.println("\n PIEPRASIT DATUS ERROR: " + e.getMessage());
+            this.kluda = "COULD NOT CONNECT TO WEATHER FORECAST API!";
         }
     }
 
@@ -88,13 +94,15 @@ public class LaikaPrognoze {
         
         }
         catch(JSONException e){
-            System.out.println(e.getMessage());
+            System.out.println("\n IEGUT PILSETAS LAIKAPSTAKLUS ERROR: " + e.getMessage());
+            this.kluda = "COULD NOT READ THE WEATHER FORECAST!";
         }
     }
 
     //Atrod lietotaja dotas pilsetas koordinatas no API
     private void iegutPilsetasKoordinatas(String pilseta){
-        this.pilseta = pilseta;
+        pilseta = pilseta.replaceAll(" ", "+");
+
         try{
             String url = "https://geocoding-api.open-meteo.com/v1/search?name=" + pilseta + "&count=1&language=en&format=json";
 
@@ -110,12 +118,16 @@ public class LaikaPrognoze {
             
         }
         catch(Exception e){
-            System.out.println(e.getMessage());
+            System.out.println("\n IEGUT PILSETAS KOORDINATAS ERROR: " + e.getMessage());
+            this.kluda = "COULD NOT CONNECT TO GEOCODING API!";
         }
     }
 
     //No API pieprasijuma izvelk lat un lon
     private void pilsetasKoordinatas(String atbilde){
+        //Debug
+        System.out.print("\nDEBUG:");
+        System.out.println(atbilde);
         try{
             JSONObject jsonAtbilde = new JSONObject(atbilde);
             JSONArray resultsArray = jsonAtbilde.getJSONArray("results");
@@ -124,13 +136,15 @@ public class LaikaPrognoze {
 
             this.lat = Double.toString(jsonAtbilde.getDouble("latitude"));
             this.lon = Double.toString(jsonAtbilde.getDouble("longitude"));
+            this.pilseta = jsonAtbilde.getString("name");
 
             //Debug
-            System.out.println(": Latitude = " + this.lat + ", Longitude = " + this.lon);
+            System.out.println("Latitude = " + this.lat + ", Longitude = " + this.lon);
             
         }
         catch(JSONException e){
-            System.out.println(e.getMessage());
+            System.out.println("\n PILSETAS KOORDINATAS ERROR: " + e.getMessage());
+            this.kluda = "CITY WAS NOT FOUND!";
         }
     }
 }
