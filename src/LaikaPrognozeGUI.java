@@ -1,6 +1,4 @@
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Image;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,6 +16,8 @@ public class LaikaPrognozeGUI extends JFrame{
         setLayout(null);
         setResizable(false);
         pievienotGUIKomponentes();
+        ImageIcon ikona = new ImageIcon("assets/icon.png");
+        setIconImage(ikona.getImage());
     }
 
     private void pievienotGUIKomponentes(){
@@ -96,6 +96,7 @@ public class LaikaPrognozeGUI extends JFrame{
         //POGA
         JButton mekletButton = new JButton(izmeraMainitajs("assets/search.png", 25, 25));
         mekletButton.setBounds(340, 15, 25, 25);
+        mekletButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         add(mekletButton);
 
         mekletButton.addActionListener(new ActionListener(){
