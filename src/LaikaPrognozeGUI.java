@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,21 +25,57 @@ public class LaikaPrognozeGUI extends JFrame{
         laikaPrognoze.iegutDatus();
 
         //LABELS
-        JLabel pilsetasLabel = new JLabel("City: " + laikaPrognoze.pilseta);
-        pilsetasLabel.setBounds(10, 10, 150, 25);
+        JLabel pilsetasLabel = new JLabel(laikaPrognoze.pilseta);
+        pilsetasLabel.setBounds(100, 60, 200, 40);
+        pilsetasLabel.setFont(new Font("Arial", Font.BOLD, 30));
+        pilsetasLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+        pilsetasLabel.setVerticalTextPosition(SwingConstants.BOTTOM);
         add(pilsetasLabel);
 
-        JLabel tempLabel = new JLabel("Temp: " + laikaPrognoze.temp);
-        tempLabel.setBounds(10, 40, 150, 25);
+        JLabel tempLabel = new JLabel(laikaPrognoze.temp + " C");
+        tempLabel.setBounds(150, 340, 100, 25);
+        tempLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        tempLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+        tempLabel.setVerticalTextPosition(SwingConstants.BOTTOM);
         add(tempLabel);
 
-        JLabel mitrumaLabel = new JLabel("Moist: " + laikaPrognoze.mitrums);
-        mitrumaLabel.setBounds(10, 70, 150, 25);
+        //HUMIDITY
+        JLabel humLabel = new JLabel("Humidiy");
+        humLabel.setBounds(30, 390, 200, 20);
+        humLabel.setFont(new Font("Arial", Font.BOLD, 15));
+        humLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+        humLabel.setVerticalTextPosition(SwingConstants.BOTTOM);
+        add(humLabel);
+
+        JLabel mitrumaLabel = new JLabel(laikaPrognoze.mitrums + "%");
+        mitrumaLabel.setBounds(60, 420, 200, 20);
+        mitrumaLabel.setFont(new Font("Arial", Font.BOLD, 15));
+        mitrumaLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+        mitrumaLabel.setVerticalTextPosition(SwingConstants.BOTTOM);
         add(mitrumaLabel);
 
-        JLabel vejaAtrumsLabel = new JLabel("Wind speed: " + laikaPrognoze.vejaAtrums);
-        vejaAtrumsLabel.setBounds(10, 100, 150, 25);
+        JLabel humBilde = new JLabel(izmeraMainitajs("assets/humidity.png", 30, 30));
+        humBilde.setBounds(25, 410, 30, 30);
+        add(humBilde);
+
+        //WIND SPEED
+        JLabel vejaLabel = new JLabel("Wind speed");
+        vejaLabel.setBounds(200, 390, 200, 20);
+        vejaLabel.setFont(new Font("Arial", Font.BOLD, 15));
+        vejaLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+        vejaLabel.setVerticalTextPosition(SwingConstants.BOTTOM);
+        add(vejaLabel);
+
+        JLabel vejaAtrumsLabel = new JLabel(laikaPrognoze.vejaAtrums + "km/h");
+        vejaAtrumsLabel.setBounds(240, 420, 200, 20);
+        vejaAtrumsLabel.setFont(new Font("Arial", Font.BOLD, 15));
+        vejaAtrumsLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+        vejaAtrumsLabel.setVerticalTextPosition(SwingConstants.BOTTOM);
         add(vejaAtrumsLabel);
+
+        JLabel vejaBilde = new JLabel(izmeraMainitajs("assets/windspeed.png", 30, 30));
+        vejaBilde.setBounds(200, 410, 30, 30);
+        add(vejaBilde);
 
         //KLUDAS
         JLabel kluda = new JLabel();
@@ -48,19 +85,17 @@ public class LaikaPrognozeGUI extends JFrame{
         
         //TEXT FIELD
         JTextField pilsetaField = new JTextField();
-        pilsetaField.setBounds(10, 130, 200, 25);
+        pilsetaField.setBounds(15, 15, 320, 25);
         add(pilsetaField);
 
         //BILDE
         JLabel bilde = new JLabel(izveletiesBildi(laikaPrognoze));
-        bilde.setBounds(10, 160, 200, 200);
+        bilde.setBounds(80, 120, 200, 200);
         add(bilde);
-        if(bilde.getIcon().getIconWidth() == -1)
-            System.out.println("Neizdevas");
 
         //POGA
-        JButton mekletButton = new JButton();
-        mekletButton.setBounds(210, 130, 25, 25);
+        JButton mekletButton = new JButton(izmeraMainitajs("assets/search.png", 25, 25));
+        mekletButton.setBounds(340, 15, 25, 25);
         add(mekletButton);
 
         mekletButton.addActionListener(new ActionListener(){
@@ -73,10 +108,10 @@ public class LaikaPrognozeGUI extends JFrame{
 
                 pilsetaField.setText(null);
 
-                pilsetasLabel.setText("City: " + laikaPrognoze.pilseta);
-                tempLabel.setText("Temp: " + laikaPrognoze.temp);
-                mitrumaLabel.setText("Moist: " + laikaPrognoze.mitrums);
-                vejaAtrumsLabel.setText("Wind speed: " + laikaPrognoze.vejaAtrums);
+                pilsetasLabel.setText(laikaPrognoze.pilseta);
+                tempLabel.setText(laikaPrognoze.temp + " C");
+                mitrumaLabel.setText(laikaPrognoze.mitrums + "%");
+                vejaAtrumsLabel.setText(laikaPrognoze.vejaAtrums + "km/h");
                 bilde.setIcon(izveletiesBildi(laikaPrognoze));
                 kluda.setText(laikaPrognoze.kluda);
             }
