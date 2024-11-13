@@ -59,7 +59,7 @@ public class LaikaPrognoze {
         }
         catch(Exception e){
             System.out.println("\n PIEPRASIT DATUS ERROR: " + e.getMessage());
-            this.kluda = "Neizdevās savienoties ar API!";
+            this.kluda = "Neizdevās izveidot savienojumu!";
         }
     }
 
@@ -95,7 +95,7 @@ public class LaikaPrognoze {
         }
         catch(JSONException e){
             System.out.println("\n IEGUT PILSETAS LAIKAPSTAKLUS ERROR: " + e.getMessage());
-            this.kluda = "Neizdevās savienoties ar API!";
+            this.kluda = "Neizdevās izveidot savienojumu!";
         }
     }
 
@@ -119,7 +119,7 @@ public class LaikaPrognoze {
         }
         catch(Exception e){
             System.out.println("\n IEGUT PILSETAS KOORDINATAS ERROR: " + e.getMessage());
-            this.kluda = "Neizdevās savienoties ar API!";
+            this.kluda = "Neizdevās izveidot savienojumu!";
         }
     }
 
