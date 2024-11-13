@@ -82,10 +82,22 @@ public class LaikaPrognozeGUI extends JFrame{
         pilsetaField.setBounds(15, 15, 320, 25);
         add(pilsetaField);
 
-        //BILDE
+        //BILDE - LAIKS
         JLabel bilde = new JLabel(izveletiesBildi(laikaPrognoze));
         bilde.setBounds(80, 120, 200, 200);
         add(bilde);
+
+        //BILDE - Open Weather
+        JLabel logo = new JLabel(izmeraMainitajs("assets/openWeather.png", 100, 45));
+        logo.setBounds(200, 500, 100, 45);
+        add(logo);
+
+        JLabel logoLabel = new JLabel("POWERED BY");
+        logoLabel.setBounds(85, 510, 120, 15);
+        logoLabel.setFont(new Font("Arial", Font.BOLD, 15));
+        logoLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+        logoLabel.setVerticalTextPosition(SwingConstants.BOTTOM);
+        add(logoLabel);
 
         //POGA
         JButton mekletButton = new JButton(izmeraMainitajs("assets/search.png", 25, 25));
