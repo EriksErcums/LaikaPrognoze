@@ -59,7 +59,7 @@ public class LaikaPrognoze {
         }
         catch(Exception e){
             System.out.println("\n PIEPRASIT DATUS ERROR: " + e.getMessage());
-            this.kluda = "COULD NOT CONNECT TO WEATHER FORECAST API!";
+            this.kluda = "Neizdevās savienoties ar API!";
         }
     }
 
@@ -95,7 +95,7 @@ public class LaikaPrognoze {
         }
         catch(JSONException e){
             System.out.println("\n IEGUT PILSETAS LAIKAPSTAKLUS ERROR: " + e.getMessage());
-            this.kluda = "COULD NOT READ THE WEATHER FORECAST!";
+            this.kluda = "Neizdevās savienoties ar API!";
         }
     }
 
@@ -119,7 +119,7 @@ public class LaikaPrognoze {
         }
         catch(Exception e){
             System.out.println("\n IEGUT PILSETAS KOORDINATAS ERROR: " + e.getMessage());
-            this.kluda = "COULD NOT CONNECT TO GEOCODING API!";
+            this.kluda = "Neizdevās savienoties ar API!";
         }
     }
 
@@ -144,7 +144,7 @@ public class LaikaPrognoze {
         }
         catch(JSONException e){
             System.out.println("\n PILSETAS KOORDINATAS ERROR: " + e.getMessage());
-            this.kluda = "CITY WAS NOT FOUND!";
+            this.kluda = "Pilsēta netika atrasta!";
         }
     }
 }

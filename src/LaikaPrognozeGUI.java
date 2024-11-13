@@ -25,22 +25,22 @@ public class LaikaPrognozeGUI extends JFrame{
         laikaPrognoze.iegutDatus();
 
         //LABELS
-        JLabel pilsetasLabel = new JLabel(laikaPrognoze.pilseta);
-        pilsetasLabel.setBounds(100, 60, 200, 40);
-        pilsetasLabel.setFont(new Font("Arial", Font.BOLD, 30));
-        pilsetasLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+        JLabel pilsetasLabel = new JLabel("", SwingConstants.CENTER);
+        KludasParbaude(pilsetasLabel, laikaPrognoze);
+        pilsetasLabel.setBounds(10, 60, 350, 40);
         pilsetasLabel.setVerticalTextPosition(SwingConstants.BOTTOM);
         add(pilsetasLabel);
 
-        JLabel tempLabel = new JLabel(laikaPrognoze.temp + " C");
+        //Temp
+        JLabel tempLabel = new JLabel(laikaPrognoze.temp + "\u00B0" + "C");
         tempLabel.setBounds(150, 340, 100, 25);
         tempLabel.setFont(new Font("Arial", Font.BOLD, 20));
         tempLabel.setHorizontalTextPosition(SwingConstants.CENTER);
         tempLabel.setVerticalTextPosition(SwingConstants.BOTTOM);
         add(tempLabel);
 
-        //HUMIDITY
-        JLabel humLabel = new JLabel("Humidiy");
+        //Mitrums
+        JLabel humLabel = new JLabel("Mitrums");
         humLabel.setBounds(30, 390, 200, 20);
         humLabel.setFont(new Font("Arial", Font.BOLD, 15));
         humLabel.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -58,8 +58,8 @@ public class LaikaPrognozeGUI extends JFrame{
         humBilde.setBounds(25, 410, 30, 30);
         add(humBilde);
 
-        //WIND SPEED
-        JLabel vejaLabel = new JLabel("Wind speed");
+        //Veja atrums
+        JLabel vejaLabel = new JLabel("Vēja ātrums");
         vejaLabel.setBounds(200, 390, 200, 20);
         vejaLabel.setFont(new Font("Arial", Font.BOLD, 15));
         vejaLabel.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -76,12 +76,6 @@ public class LaikaPrognozeGUI extends JFrame{
         JLabel vejaBilde = new JLabel(izmeraMainitajs("assets/windspeed.png", 30, 30));
         vejaBilde.setBounds(200, 410, 30, 30);
         add(vejaBilde);
-
-        //KLUDAS
-        JLabel kluda = new JLabel();
-        kluda.setBounds(10, 370, 150, 25);
-        kluda.setForeground(Color.RED);
-        add(kluda);
         
         //TEXT FIELD
         JTextField pilsetaField = new JTextField();
@@ -109,12 +103,11 @@ public class LaikaPrognozeGUI extends JFrame{
 
                 pilsetaField.setText(null);
 
-                pilsetasLabel.setText(laikaPrognoze.pilseta);
-                tempLabel.setText(laikaPrognoze.temp + " C");
+                KludasParbaude(pilsetasLabel, laikaPrognoze);
+                tempLabel.setText(laikaPrognoze.temp +  "\u00B0" + "C");
                 mitrumaLabel.setText(laikaPrognoze.mitrums + "%");
                 vejaAtrumsLabel.setText(laikaPrognoze.vejaAtrums + "km/h");
                 bilde.setIcon(izveletiesBildi(laikaPrognoze));
-                kluda.setText(laikaPrognoze.kluda);
             }
         });
     }
@@ -130,7 +123,7 @@ public class LaikaPrognozeGUI extends JFrame{
     private ImageIcon izveletiesBildi(LaikaPrognoze laikaPrognoze){
         //Default bilde
         ImageIcon ikons = new ImageIcon();
-        ikons = izmeraMainitajs("assets/clear.png", 200, 200);
+        ikons = izmeraMainitajs("assets/clear.png", 245, 217);
 
         if(laikaPrognoze.sniegs)
             ikons = izmeraMainitajs("assets/snow.png", 200, 200);
@@ -139,8 +132,20 @@ public class LaikaPrognozeGUI extends JFrame{
         else if(laikaPrognoze.makonains)
             ikons = izmeraMainitajs("assets/cloudy.png", 200, 200);
         else
-            ikons = izmeraMainitajs("assets/clear.png", 200, 200);
+            ikons = izmeraMainitajs("assets/clear.png", 245, 217);
 
         return ikons;
+    }
+    private void KludasParbaude(JLabel pilsetasLabel, LaikaPrognoze laikaPrognoze){
+        if(laikaPrognoze.kluda.isEmpty()){
+            pilsetasLabel.setText(laikaPrognoze.pilseta);
+            pilsetasLabel.setFont(new Font("Arial", Font.BOLD, 30));
+            pilsetasLabel.setForeground(Color.DARK_GRAY);
+        }
+        else{
+            pilsetasLabel.setText(laikaPrognoze.kluda);
+            pilsetasLabel.setFont(new Font("Arial", Font.BOLD, 20));
+            pilsetasLabel.setForeground(Color.RED);
+        }
     }
 }
